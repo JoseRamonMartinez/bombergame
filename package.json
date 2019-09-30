@@ -1,0 +1,19 @@
+{
+  "name": "bombergame",
+  "version": "1.0.0",
+  "description": "Juego multijugador basado en el bomberman",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hirotoxavier/bombergame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hirotoxavier/bombergame/issues"
+  },
+  "homepage": "https://github.com/Hirotoxavier/bombergame#readme"
+}
