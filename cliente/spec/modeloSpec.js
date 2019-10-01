@@ -26,10 +26,10 @@ describe("Bombergame", function() {
     expect(juego.partidas["unapepe"]).not.toBe(undefined);
     expect(juego.partidas["unapepe"].jugadores["pepe"]).not.toBe(undefined);
     expect(juego.partidas["unapepe"].idp).toBe("unapepe");
-    /*expect(juego.partidas[1].nick).toBe("pepe");*/
+    
   });
 
-  /*it("compronar usuarios", function() {
+ /* it("compronar usuarios", function() {
     juego.agregarUsuario('pepe');
     juego.crearPartida('una','pepe');
     juego.agregarUsuario('ana');
@@ -41,6 +41,34 @@ describe("Bombergame", function() {
     
   });*/
 
+  it("comprobar que se sale (dos jugadores)", function() {
+    juego.agregarUsuario('pepe');
+    juego.crearPartida('una','pepe');
+    var partida=juego.partidas["unapepe"];
+    expect(Object.keys(juego.partidas).length).toEqual(1);
+    expect(partida).not.toBe(undefined);
+    expect(partida.jugadores["pepe"]).not.toBe(undefined);
+    expect(partida.idp).toBe("unapepe");
+    juego.agregarUsuario("ana");
+    juego.unirPartida("unapepe","ana");
+    juego.salir("unapepe","pepe");
+    expect(Object.keys(partida.jugadores).length).toEqual(1);    
+   
+  });
 
-  
+
+
+/*
+  it("comprobar que se sale", function() {
+    juego.agregarUsuario('pepe');
+    juego.crearPartida('una','pepe');
+    expect(Object.keys(juego.partidas).length).toEqual(1);
+    expect(juego.partidas["unapepe"]).not.toBe(undefined);
+    expect(juego.partidas["unapepe"].jugadores["pepe"]).not.toBe(undefined);
+    expect(juego.partidas["unapepe"].idp).toBe("unapepe");
+
+    juego.salir("unapepe","pepe");
+    expect(juego.partidas["unapepe"].jugadores.toBe(undefined));    
+  });
+  */
 });
