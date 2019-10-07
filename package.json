@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Hirotoxavier/bombergame/issues"
   },
-  "homepage": "https://github.com/Hirotoxavier/bombergame#readme"
+  "homepage": "https://github.com/Hirotoxavier/bombergame#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
