@@ -1,28 +1,53 @@
 function Juego(){
-	this.partidas=[];
-	this.usuarios=[];
+	this.partidas={};
+	this.usuarios={};
 	
-	this.crearPartida=function(nombre, nick){
+	//
+	this.crearPartida=function(nombre,nick, callback){
 		var idp=nombre+nick;
+		var partida;
 		if(!this.partidas[idp]){
-				this.partidas[idp]=new Partida(nombre,idp);
-				this.partidas[idp].agregarJugador(this.usuarios[nick]);
+			console.log("Nueva partida: "+nombre);
+				partida=new Partida(nombre,idp);
+				partida.agregarJugador(this.usuarios[nick]);
+				this.partidas[idp]=partida;
 		}
+		else{
+			partida=this.partidas[idp];
+		}
+		//
+		callback(partida);
 	}
-	this.agregarUsuario=function(nombre){
+	this.agregarUsuario=function(nombre,callback){
 		if(!this.usuarios[nombre]){
+			console.log("Nuevo usuario: "+nombre);
 			this.usuarios[nombre]=new Usuario(nombre);
 		}
+		callback(this.usuarios[nombre]);
 	}
 
-	this.unirPartida=function unirPartida(nombre,nick){
-		if(this.partidas[nombre] && this.usuarios[nick]){
-		this.partidas[nombre].agregarJugador(this.usuarios[nick]);
+	this.obtenerJugadores=function(idp,callback){
+		callback(this.partidas[idp].obtenerjug());
+	}
+
+
+
+	this.unirPartida=function unirPartida(idp,nick,callback){
+		if(this.partidas[idp] && this.usuarios[nick]){
+		this.partidas[idp].agregarJugador(this.usuarios[nick]);
 		}
+		callback(this.partidas[idp]);
 	}
 
-	this.obtenerPartidas=function(){
-		return this.partidas;
+	this.obtenerPartidas=function(callback){
+		callback(this.partidas);
+		//return this.partidas;
+
+	}
+
+	this.obtenerUsuarios=function(callback){
+		callback(this.usuarios);
+		//return this.usuarios;
 	}
 
 	this.salir=function(nombrePartida,nick){
@@ -44,7 +69,7 @@ function Juego(){
 function Partida(nombre,idp){
 	this.nombre=nombre;
 	this.idp=idp;
-	this.jugadores=[];
+	this.jugadores={};
 	this.fase=new Inicial();
 	this.agregarJugador=function(usr){
 		this.fase.agregarJugador(usr,this);
@@ -53,9 +78,9 @@ function Partida(nombre,idp){
 		this.jugadores[usr.nick]=usr;
 	}
 
-	/*this.salir=function(nick){
-		delete this.juagadores[nick];
-	}*/
+	this.obtenerjug=function(){
+		return this.jugadores;
+	}
 
 }
 function Usuario(nick){
@@ -63,6 +88,8 @@ function Usuario(nick){
 	this.id=undefined;
 	
 }
+
+
 
 function Inicial(){
 	this.nombre="inicial";
@@ -83,3 +110,4 @@ function Final(){
 }
 
 
+module.exports.Juego=Juego;

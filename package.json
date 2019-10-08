@@ -4,7 +4,7 @@
   "description": "Juego multijugador basado en el bomberman",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node servidor"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Hirotoxavier/bombergame#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jasmine-node": "^3.0.0"
   }
 }
