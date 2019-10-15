@@ -18,13 +18,17 @@ function Juego(){
 		//
 		callback(partida);
 	}
+
 	this.agregarUsuario=function(nombre,callback){
-		if(!this.usuarios[nombre]){
-			console.log("Nuevo usuario: "+nombre);
-			this.usuarios[nombre]=new Usuario(nombre);
+			if(!this.usuarios[nombre]){
+
+				console.log("Nuevo usuario: "+nombre);
+				this.usuarios[nombre]=new Usuario(nombre);
+				callback(this.usuarios[nombre]);
+			}
+			else callback({nick:""});
+			
 		}
-		callback(this.usuarios[nombre]);
-	}
 
 	this.obtenerJugadores=function(idp,callback){
 		callback(this.partidas[idp].obtenerjug());

@@ -3,14 +3,17 @@ function ClienteRest(){
 	this.agregarUsuario=function(nick){
 	$.getJSON("/agregarUsuario/"+nick,function(data){    
             console.log(data);
-            mostrarUsuario(data);
+            /*if(data.nick!=""){*/
+            mostrarUsuario(data);/*}*/
+
         });
 	}
 
 	this.crearPartida=function(nombre,nick){
 	$.getJSON("/crearPartida/"+nombre,function(data){    
             console.log(data);
-            //mostrarUsuario(data);
+
+            /*mostrarPartida(data);*/
         });
 	}
 
