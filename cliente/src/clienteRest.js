@@ -1,52 +1,37 @@
 function ClienteRest(){
 
 	this.agregarUsuario=function(nick){
-	$.getJSON("/agregarUsuario/"+nick,function(data){    
-            console.log(data);
-            /*if(data.nick!=""){*/
-            mostrarUsuario(data);/*}*/
-
-        });
+		$.getJSON("/agregarUsuario/"+nick,function(data){    
+    		console.log(data);
+    		if (data.nick!=""){
+	    		mostrarUsuario(data);
+	    	}
+	    	else{
+	    		mostrarAviso("Utiliza otro nick");	
+	    	}
+		});
 	}
-
-	this.crearPartida=function(nombre,nick){
-	$.getJSON("/crearPartida/"+nombre,function(data){    
-            console.log(data);
-
-            /*mostrarPartida(data);*/
-        });
+	this.crearPartida=function(nombrePartida,nick){
+		$.getJSON("/crearPartida/"+nombrePartida+"/"+nick,function(data){    
+    		console.log(data);
+    		mostrarPartida(data);
+		});
 	}
-
+	this.unirPartida=function(nombrePartida,nick){
+		$.getJSON("/unirPartida/"+nombrePartida+"/"+nick,function(data){    
+    		console.log(data);
+    		mostrarPartida(data);
+		});
+	}
 	this.obtenerPartidas=function(){
-	$.getJSON("/obtenerPartidas",function(data){    
-            console.log(data);
-            //mostrarUsuario(data);
-        });
+		$.getJSON("/obtenerPartidas",function(data){    
+    		console.log(data);
+    		mostrarListaPartidas(data);
+		});
 	}
-
-	
-
-	this.obtenerUsuarios=function(){
-	$.getJSON("/obtenerUsuarios",function(data){    
-            console.log(data);
-            //mostrarUsuario(data);
-        });
+	this.obtenerJugadores=function(nombrePartida){
+		$.getJSON("/obtenerJugadores/"+nombrePartida,function(data){
+			console.log(data);
+		})
 	}
-
-	this.unirPartida=function(nombre,nick){
-	$.getJSON("/unirPartida/"+nombre,function(data){    
-            console.log(data);
-            //mostrarUsuario(data);
-        });
-	}
-
-	
-	this.obtenerJugadores=function(nombre){
-	$.getJSON("/obtenerJugadores/"+nombre,function(data){    
-            console.log(data);
-            //mostrarUsuario(data);
-        });
-	}
-
-
 }
