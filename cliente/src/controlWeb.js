@@ -62,23 +62,24 @@ function mostrarPartida(data){
     $('#inicio').append(cadena);
 }
 
+
 function mostrarListaPartidas(data){
-    $('#mCP').remove();
-    var numeroPartidas=Object.keys(data).length;
-    var cadena="<div id='mLP'>";
-    cadena=cadena+"<h3>Lista de partidas</h3>";
-    //cadena=cadena+'<ul class="list-group">';
-    cadena=cadena+'<table class="table"><thead><tr>';
+	$('#mCP').remove();
+	var numeroPartidas=Object.keys(data).length;
+	var cadena="<div id='mLP'>";
+	cadena=cadena+"<h3>Lista de partidas</h3>";
+	//cadena=cadena+'<ul class="list-group">';
+  	cadena=cadena+'<table class="table"><thead><tr>';
     cadena=cadena+'<th scope="col">Nombre</th><th scope="col">Número jugadores</th><th>Unirse</th>';
     cadena=cadena+'</tr></thead>';
     cadena=cadena+'<tbody>';
-    for(var key in data){
-        cadena=cadena+'<tr>'
-        cadena=cadena+'<td>'+data[key].nombre+'</td>';
-        cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
-        cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="rest.unirAPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
-        cadena=cadena+'</tr>';
-    };
-    cadena=cadena+"</tbody></table></div>";
-    $('#inicio').append(cadena);
+  	for(var key in data){
+  		cadena=cadena+'<tr>'
+  		cadena=cadena+'<td>'+data[key].nombre+'</td>';
+  		cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
+ 		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="rest.unirPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
+ 		cadena=cadena+'</tr>';
+  	};
+  	cadena=cadena+"</tbody></table></div>";
+  	$('#inicio').append(cadena);
 }
