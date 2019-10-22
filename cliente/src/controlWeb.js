@@ -18,6 +18,8 @@ function mostrarAgregarUsuario(){
 
 function mostrarUsuario(data){
     $('#mAU').remove();
+    ws = new clienteWS(data.nick);
+    ws.ini();
     //var cadena="<h3>Bienvenido "+data.nick;
     //$('#inicio').append(cadena);
     nick=data.nick;
@@ -46,9 +48,11 @@ function mostrarCrearPartida(nick){
         if (nombre==""){
             nombre="SinNombre";
         }
-        rest.crearPartida(nombre,nick);
+        //rest.crearPartida(nombre,nick);
+        ws.crearPartida(nombre);
      });
     $('#unirseAPartidaBtn').on('click',function(){
+    	//rest.unirPartida();
         rest.obtenerPartidas();
      });
 
@@ -77,9 +81,33 @@ function mostrarListaPartidas(data){
   		cadena=cadena+'<tr>'
   		cadena=cadena+'<td>'+data[key].nombre+'</td>';
   		cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
- 		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="rest.unirPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
+ 		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="ws.unirPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
  		cadena=cadena+'</tr>';
   	};
   	cadena=cadena+"</tbody></table></div>";
   	$('#inicio').append(cadena);
+}
+
+
+
+function mostrarListaJugadores(jugadores){
+	//$('#mCP').remove();
+	$('#mLJ').remove();
+	//var numeroPartidas=Object.keys(data).length;
+	var cadena="<div id='mLJ'>";
+	cadena=cadena+"<h3>Lista de jugadores</h3>";
+	//cadena=cadena+'<ul class="list-group">';
+  	cadena=cadena+'<table class="table"><thead><tr>';
+    cadena=cadena+'<th scope="col">Nick</th><th scope="col">Vidas</th><th>Otros</th>';
+    cadena=cadena+'</tr></thead>';
+    cadena=cadena+'<tbody>';
+  	for(var key in jugadores){
+  		cadena=cadena+'<tr>'
+  		cadena=cadena+'<td>'+jugadores[key].nick+'</td>';
+  		cadena=cadena+'<td></td>';//+Object.keys(jugadores[key].jugadores).length+'</td>';
+ 		cadena=cadena+'<td></td>';//'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="ws.unirPartida(\''+jugadores[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
+ 		cadena=cadena+'</tr>';
+  	};
+  	cadena=cadena+"</tbody></table></div>";
+  	$('#mP').append(cadena);
 }
