@@ -1,2 +1,2 @@
-# bombergame
-Juego multijugador basado en el bomberman
+# Bombergame
+Juego multijugador basado en bomberman

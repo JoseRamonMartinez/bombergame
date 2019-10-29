@@ -1,6 +1,3 @@
-//2- Devolver la cadena indicada en la url con
-//este formato /hola/juanito
-
 var fs=require("fs");
 var config=JSON.parse(fs.readFileSync("config.json"));
 var host=config.host;
@@ -10,73 +7,72 @@ var app=exp();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var srvWS=require('./servidor/servidorWS.js');
-var ws=new srvWS.servidorWS();
-
-
-
-
-
+var ws=new srvWS.ServidorWS();
 var modelo=require("./servidor/modelo.js");
 
 var juego=new modelo.Juego();
 
 app.use(exp.static(__dirname + "/cliente"));
 
-//app.get("/",function(request,response){
-//	response.send("hola");
-//});
-
+// app.get("/",function(request,response){
+// 	response.send("hola");
+// });
 
 app.get("/agregarUsuario/:nick",function(request,response){
 	var nick=request.params.nick;
-	juego.agregarUsuario(nick,function(urs){
-		response.send(urs);
+	juego.agregarUsuario(nick,function(usr){
+		response.send(usr);
 	});
 });
 
-app.get("/crearPartida/:nombre/:nick",function(request,response){
-	var nombre=request.params.nombre;
+app.get("/crearPartida/:nombrePartida/:nick",function(request,response){
 	var nick=request.params.nick;
-	juego.crearPartida(nombre,nick,function(partida){
+	var nombrePartida=request.params.nombrePartida;
+	console.log("Usuario "+nick+" crea la partida "+nombrePartida);
+	juego.crearPartida(nombrePartida,nick,function(partida){
 		response.send(partida);
 	});
 });
 
 app.get("/obtenerPartidas",function(request,response){
-	juego.obtenerPartidas(function(partida){
-		response.send(partida);
-	});
-		//response.send(partida);
+	juego.obtenerPartidas(function(partidas){
+		response.send(partidas);
+	})
+});
+
+app.get("/compronarUsuario/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.comprobarUsuario(nick,function(urs){
+		response.send(urs);
+	})
 });
 
 app.get("/obtenerUsuarios",function(request,response){
-	juego.obtenerUsuarios(function(usr){
-		response.send(usr);
-	});
-		//response.send(partida);
+	juego.obtenerUsuarios(function(usuarios){
+		response.send(usuarios);
+	})
 });
 
-
-app.get("/unirPartida/:idp/:nick",function(request,response){
-	var idp=request.params.idp;
+app.get("/unirAPartida/:nombrePartida/:nick",function(request,response){
 	var nick=request.params.nick;
-	juego.unirPartida(idp,nick,function(partida){
-		response.send(partida);
-	});
+	var nombrePartida=request.params.nombrePartida;
+	console.log("Usuario "+nick+" se une a la partida "+nombrePartida);
+	var partida={};
+	partida=juego.unirAPartida(nombrePartida,nick);
+	response.send(partida);
 });
 
-app.get("/obtenerJugadores/:idp",function(request,response){
-	var idp=request.params.idp
-	juego.obtenerJugadores(idp,function(jdr){
-		response.send(jdr);
-	});
-		//response.send(partida);
+app.get("/obtenerJugadores/:nombrePartida",function(request,response){
+	var nombrePartida=request.params.nombrePartida;
+	juego.obtenerJugadoresPartida(nombrePartida,function(jugadores){
+		response.send(jugadores);
+	})
 });
 
-console.log("Servidor escuchando en "+host+":"+port);
+//console.log("Servidor escuchando en "+host+":"+port);
 //app.listen(port,host);
 server.listen(port, function() {
-  console.log('Node app is running on port', port);
+  console.log('Node app se está ejecutando en el puerto', port);
 });
 
 ws.lanzarSocketSrv(io,juego);

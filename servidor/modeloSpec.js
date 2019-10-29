@@ -34,7 +34,7 @@ describe("Bombergame", function() {
     juego.crearPartida("una","pepe",function(){});
     juego.agregarUsuario("ana",function(){});
     expect(Object.keys(juego.usuarios).length).toEqual(2);
-    juego.unirPartida("unapepe","ana");
+    juego.unirAPartida("unapepe","ana");
     expect(Object.keys(juego.partidas).length).toEqual(1);
     expect(Object.keys(juego.partidas["unapepe"].jugadores).length).toEqual(2);
     expect(juego.partidas["unapepe"].jugadores["ana"]).not.toBe(undefined);
@@ -49,7 +49,7 @@ it("comprobar usuario pepe sale de partida unapepe (dos jugadores)",function(){
     expect(partida.jugadores["pepe"]).not.toBe(undefined);
     expect(partida.idp).toBe("unapepe");
     juego.agregarUsuario("ana",function(){});
-    juego.unirPartida("unapepe","ana");
+    juego.unirAPartida("unapepe","ana");
     juego.salir("unapepe","pepe");
     expect(partida.jugadores["pepe"]).toBe(undefined);
     expect(Object.keys(partida.jugadores).length).toBe(1);
