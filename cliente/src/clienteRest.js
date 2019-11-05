@@ -31,7 +31,7 @@ function ClienteRest(){
 		var usr=JSON.parse($.cookie("usr"));
 		$.getJSON("/cerrarSesion/"+usr.nick,function(data){  
 			console.log(data);
-			$.removeCookie("usr"/*, { path: '/' }*/);
+			$.removeCookie("usr", { path: '/' });
 			mostrarAgregarUsuario(data);
 
 

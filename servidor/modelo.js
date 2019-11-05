@@ -29,10 +29,13 @@ function Juego(){
 	}
 
 	this.cerrarSesion=function(nick,callback){
-		if (this.usuarios[nick]){
-			console.log("Sesion cerrada: "+nick);
-			delete this.usuarios[nick]
+		var data={res:"nook"};
+		if(this.usuarios[nick]){
+			delete this.usuarios[nick];			
+			data={res:"ok"};
+			console.log("Usuario "+nick+" cierra sesión");
 		}
+		callback(data);
 	}
 
 	this.obtenerUsuario=function(nick,callback){
