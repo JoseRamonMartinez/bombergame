@@ -9,7 +9,7 @@ function ClienteWS(nick){
 	this.crearPartida=function(nombrePartida){
 		//this.nombrePartida=nombre;
 		this.socket.emit('crearPartida',this.nick,nombrePartida);
-   			console.log("usuario "+this.nick+" crea partida "+nombrePartida);
+		console.log("usuario "+this.nick+" crea partida "+nombrePartida);
 	}
 	this.obtenerPartidas=function(){
 		this.socket.emit("obtenerPartidas");
@@ -27,7 +27,7 @@ function ClienteWS(nick){
 	this.lanzarSocketSrv=function(){
 		var cli=this;
 		this.socket.on('connect', function(){   						
-   			console.log("Usuario conectado al servidor de WebSockets");
+			console.log("Usuario conectado al servidor de WebSockets");
 		});
 		this.socket.on('partidaCreada',function(partida){
 			console.log("partida creada:",partida);
@@ -48,6 +48,7 @@ function ClienteWS(nick){
 		});
 		this.socket.on('saliste',function(){
 			mostrarCrearPartida(this.nick);
+			borrarCanvas();
 		});
 		this.socket.on('saleJugador',function(jugadores){
 			mostrarListaJugadores(jugadores);
@@ -55,5 +56,8 @@ function ClienteWS(nick){
 		this.socket.on('otropreparado',function(jugadores){
 			mostrarListaJugadores(jugadores);
 		})
+		this.socket.on('aJugar',function(partida){
+			mostrarCanvas();
+		});
 	}
 }

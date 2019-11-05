@@ -27,27 +27,23 @@ function Juego(){
 			callback({nick:""});
 		}
 	}
-<<<<<<< HEAD
 
 	this.cerrarSesion=function(nick,callback){
 		if (this.usuarios[nick]){
 			console.log("Sesion cerrada: "+nick);
 			delete this.usuarios[nick]
-=======
+		}
+	}
+
 	this.obtenerUsuario=function(nick,callback){
 		if (this.usuarios[nick]){
->>>>>>> 3cd70f6d443ea5929c2d22ac51677010733189b1
+
 			callback(this.usuarios[nick]);
 		}
 		else{
 			callback({nick:""});
 		}
 	}
-<<<<<<< HEAD
-
-
-
-	
 	this.obtenerUsuario=function(nick,callback){
 		if (this.usuarios[nick]){
 			callback(this.usuarios[nick]);
@@ -56,8 +52,7 @@ function Juego(){
 			callback({nick:""});
 		}
 	}
-=======
->>>>>>> 3cd70f6d443ea5929c2d22ac51677010733189b1
+
 	this.obtenerUsuarios=function(callback){
 		callback(this.usuarios);
 	}
@@ -101,13 +96,14 @@ function Juego(){
 		}
 		callback(jugadores);
 	}
+
 	this.jugadorPreparado=function(idp,nick,callback){
-		var jugadores=[];
+		//var jugadores=[];
 		if (this.partidas[idp]){
 			this.partidas[idp].jugadorPreparado(nick);
-			jugadores=this.partidas[idp].jugadores;
+			//jugadores=this.partidas[idp].jugadores;
 		}
-		callback(jugadores);
+		callback(this.partidas[idp]);
 	}
 }
 

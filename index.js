@@ -25,7 +25,7 @@ app.get("/agregarUsuario/:nick",function(request,response){
 	});
 });
 
-<<<<<<< HEAD
+
 app.get("/cerrarSesion/:nick",function(request,response){
 	var nick=request.params.nick;
 	juego.cerrarSesion(nick,function(usr){
@@ -33,8 +33,7 @@ app.get("/cerrarSesion/:nick",function(request,response){
 	});
 });
 
-=======
->>>>>>> 3cd70f6d443ea5929c2d22ac51677010733189b1
+
 app.get("/comprobarUsuario/:nick",function(request,response){
 	var nick=request.params.nick;
 	juego.obtenerUsuario(nick,function(usr){

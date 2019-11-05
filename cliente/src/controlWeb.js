@@ -22,12 +22,12 @@ function mostrarAgregarUsuario(){
 
 	$('#inicio').append(cadena);
 	$('#inicioBtn').on('click',function(){
-        var nombre=$('#nombre').val();
-        if (nombre==""){
-        	nombre="Neutro";
-        }
-        rest.agregarUsuario(nombre);
-     });
+		var nombre=$('#nombre').val();
+		if (nombre==""){
+			nombre="Neutro";
+		}
+		rest.agregarUsuario(nombre);
+	});
 }
 
 function mostrarUsuario(data){
@@ -60,17 +60,17 @@ function mostrarCrearPartida(nick){
 
 	$('#inicio').append(cadena);
 	$('#crearPartidaBtn').on('click',function(){
-        var nombre=$('#nombrePartida').val();
-        if (nombre==""){
-        	nombre="SinNombre";
-        }
+		var nombre=$('#nombrePartida').val();
+		if (nombre==""){
+			nombre="SinNombre";
+		}
         //rest.crearPartida(nombre,nick);
         ws.crearPartida(nombre);
-     });
+    });
 	$('#unirseAPartidaBtn').on('click',function(){
         //rest.obtenerPartidas();
         ws.obtenerPartidas();
-     });
+    });
 
 }
 
@@ -90,19 +90,19 @@ function mostrarListaPartidas(data){
 	var cadena="<div id='mLP'>";
 	cadena=cadena+"<h3>Lista de partidas</h3>";
 	//cadena=cadena+'<ul class="list-group">';
-  	cadena=cadena+'<table class="table"><thead><tr>';
-    cadena=cadena+'<th scope="col">Nombre</th><th scope="col">Número jugadores</th><th>Unirse</th>';
-    cadena=cadena+'</tr></thead>';
-    cadena=cadena+'<tbody>';
-  	for(var key in data){
-  		cadena=cadena+'<tr>'
-  		cadena=cadena+'<td>'+data[key].nombre+'</td>';
-  		cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
- 		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="ws.unirAPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
- 		cadena=cadena+'</tr>';
-  	};
-  	cadena=cadena+"</tbody></table></div>";
-  	$('#inicio').append(cadena);
+	cadena=cadena+'<table class="table"><thead><tr>';
+	cadena=cadena+'<th scope="col">Nombre</th><th scope="col">Número jugadores</th><th>Unirse</th>';
+	cadena=cadena+'</tr></thead>';
+	cadena=cadena+'<tbody>';
+	for(var key in data){
+		cadena=cadena+'<tr>'
+		cadena=cadena+'<td>'+data[key].nombre+'</td>';
+		cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
+		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="ws.unirAPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
+		cadena=cadena+'</tr>';
+	};
+	cadena=cadena+"</tbody></table></div>";
+	$('#inicio').append(cadena);
 }
 
 function mostrarListaJugadores(jugadores){
@@ -111,17 +111,29 @@ function mostrarListaJugadores(jugadores){
 	//var numeroPartidas=Object.keys(data).length;
 	var cadena="<div id='mLJ'>";
 	cadena=cadena+"<h3>Lista de jugadores</h3>";
-  	cadena=cadena+'<table class="table"><thead><tr>';
-    cadena=cadena+'<th scope="col">Nick</th><th scope="col">Vidas</th><th>Otros</th>';
-    cadena=cadena+'</tr></thead>';
-    cadena=cadena+'<tbody>';
-  	for(var key in jugadores){
-  		cadena=cadena+'<tr>'
-  		cadena=cadena+'<td>'+jugadores[key].nick+'</td>';
-  		cadena=cadena+'<td>-</td>';
- 		cadena=cadena+'<td>'+jugadores[key].estado+'</td>';
- 		cadena=cadena+'</tr>';
-  	};
-  	cadena=cadena+"</tbody></table></div>";
-  	$('#mP').append(cadena);
+	cadena=cadena+'<table class="table"><thead><tr>';
+	cadena=cadena+'<th scope="col">Nick</th><th scope="col">Vidas</th><th>Otros</th>';
+	cadena=cadena+'</tr></thead>';
+	cadena=cadena+'<tbody>';
+	for(var key in jugadores){
+		cadena=cadena+'<tr>'
+		cadena=cadena+'<td>'+jugadores[key].nick+'</td>';
+		cadena=cadena+'<td>-</td>';
+		cadena=cadena+'<td>'+jugadores[key].estado+'</td>';
+		cadena=cadena+'</tr>';
+	};
+	cadena=cadena+"</tbody></table></div>";
+	$('#mP').append(cadena);
+}
+
+function mostrarCanvas(){
+var game = new Phaser.Game(240, 240, Phaser.CANVAS, "juego");
+game.state.add("BootState", new Bomberman.BootState());
+game.state.add("LoadingState", new Bomberman.LoadingState());
+game.state.add("TiledState", new Bomberman.TiledState());
+game.state.start("BootState", true, false, "assets/levels/level1.json", "TiledState");}
+
+
+function borrarCanvas(){
+	$('canvas').remove();
 }

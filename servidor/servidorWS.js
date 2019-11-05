@@ -14,14 +14,14 @@ function ServidorWS(){
     		console.log("Nueva conexión");
     		socket.on('crearPartida', function(nick,nombrePartida){
     			juego.crearPartida(nombrePartida,nick,function(partida){
-					cli.enviarRemitente(socket,"partidaCreada",partida);
-					socket.join(partida.idp);
-				});
+                 cli.enviarRemitente(socket,"partidaCreada",partida);
+                 socket.join(partida.idp);
+             });
     		});
     		socket.on('obtenerPartidas',function(){
     			juego.obtenerPartidasInicial(function(partidas){
-					cli.enviarRemitente(socket,"partidas",partidas);
-				});
+                 cli.enviarRemitente(socket,"partidas",partidas);
+             });
     		});
     		socket.on("unirAPartida",function(idp,nick){
     			var partida=juego.unirAPartida(idp,nick);
@@ -33,15 +33,18 @@ function ServidorWS(){
     			var partida=juego.salir(idp,nick);                
     			cli.enviarRemitente(socket,"saliste");
                 if (partida!=undefined){
-        			cli.enviarATodosMenosRemitente(socket,idp,"saleJugador",partida.jugadores);
-                }
-    		});
+                   cli.enviarATodosMenosRemitente(socket,idp,"saleJugador",partida.jugadores);
+               }
+           });
             socket.on("preparado",function(idp,nick){
-                juego.jugadorPreparado(idp,nick,function(jugadores){
-                    cli.enviarATodos(io,idp,"otropreparado",jugadores);                    
+                juego.jugadorPreparado(idp,nick,function(partida){
+                    cli.enviarATodos(io,idp,"otropreparado",partida.jugadores);   
+                    if (partida.fase.nombre="jugando")
+                        cli.enviarATodos(io,idp,"aJugar",partida);    
+                                
                 });                
             });
-    	});
+        });
     }
 }
 
