@@ -1,12 +1,19 @@
-var nick;
-function comprobarUsuario(rest){
-  if($.cookie("usr"){
-  	rest.comprobarUsuario();
 
-  }
-  else mostrarAgregarUsuario();
+var nick;
+
+function comprobarUsuario(){
+	if ($.cookie("usr")){
+		rest.comprobarUsuario();
+	}
+	else{
+		mostrarAgregarUsuario();
+	}
 }
+
 function mostrarAgregarUsuario(){
+	$('#mAU').remove();
+	$('#mCP').remove();
+	
 	var cadena="<div id='mAU'>";
 	cadena=cadena+"<h3>Usuario</h3>";
 	cadena=cadena+'<input id="nombre" type="text" class="form-control" name="nombre" placeholder="Nombre usuario">';		
@@ -39,8 +46,10 @@ function mostrarAviso(msg){
 function mostrarCrearPartida(nick){
 	$('#mLP').remove();
 	$('#mP').remove();
+	$('#mCP').remove();
 	var cadena="<div id='mCP'>";
 	cadena=cadena+"<h3>Bienvenido "+nick+"</h3>";
+	cadena=cadena+'<button type="button" id="cerrarSesionBtn" class="btn btn-primary btn-md" onclick="rest.cerrarSesion()"">CerrarSesion</button>';
 	cadena=cadena+"<div class='row'><div class='col-sm-8'>";
 	cadena=cadena+"<h3>Crear Partida</h3>";
 	cadena=cadena+'<input id="nombrePartida" type="text" class="form-control" name="nombrePartida" placeholder="Nombre partida">';		
@@ -70,8 +79,8 @@ function mostrarPartida(data){
 	$('#mLP').remove();
 	var cadena="<div id='mP'>";
 	cadena=cadena+"<h3>Bienvenido a la partida: "+data.nombre+"</h3>";
-	cadena=cadena+'<p><button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p>';
-  cadena=cadena+'<p><button type="button" id="preparadoBtn" class="btn btn-primary btn-md" onclick="ws.preparado(\''+data.idp+'\',\''+data.nick+'\')"">Preparado</button></p></div>';
+	cadena=cadena+'<p><button type="button" id="preparadoBtn" class="btn btn-primary btn-md" onclick="ws.preparado()"">Preparado</button> ';	
+	cadena=cadena+' <button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p></div>';
 	$('#inicio').append(cadena);
 }
 

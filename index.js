@@ -25,6 +25,20 @@ app.get("/agregarUsuario/:nick",function(request,response){
 	});
 });
 
+app.get("/cerrarSesion/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.cerrarSesion(nick,function(usr){
+		response.send(usr);
+	});
+});
+
+app.get("/comprobarUsuario/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.obtenerUsuario(nick,function(usr){
+		response.send(usr);
+	})
+});
+
 app.get("/crearPartida/:nombrePartida/:nick",function(request,response){
 	var nick=request.params.nick;
 	var nombrePartida=request.params.nombrePartida;
@@ -37,13 +51,6 @@ app.get("/crearPartida/:nombrePartida/:nick",function(request,response){
 app.get("/obtenerPartidas",function(request,response){
 	juego.obtenerPartidas(function(partidas){
 		response.send(partidas);
-	})
-});
-
-app.get("/compronarUsuario/:nick",function(request,response){
-	var nick=request.params.nick;
-	juego.comprobarUsuario(nick,function(urs){
-		response.send(urs);
 	})
 });
 

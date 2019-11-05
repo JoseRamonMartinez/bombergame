@@ -17,11 +17,12 @@ function ClienteWS(nick){
 	this.unirAPartida=function(idp,nick){
 		this.socket.emit("unirAPartida",idp,nick);
 	}
-  this.preparado=function(idp,nick){
-    this.socket.emit("preparado",this.idp,this.nick);
-  }
 	this.salir=function(){
 		this.socket.emit("salir",this.idp,this.nick);
+	}
+	this.preparado=function(){
+		$('#preparadoBtn').remove();
+		this.socket.emit("preparado",this.idp,this.nick);
 	}
 	this.lanzarSocketSrv=function(){
 		var cli=this;
@@ -45,10 +46,13 @@ function ClienteWS(nick){
 		this.socket.on('nuevoJugador',function(jugadores){
 			mostrarListaJugadores(jugadores);
 		});
-    this.socket.on('saliste',function(){
-      mostrarCrearPartida(this.nick);
-    });
+		this.socket.on('saliste',function(){
+			mostrarCrearPartida(this.nick);
+		});
 		this.socket.on('saleJugador',function(jugadores){
+			mostrarListaJugadores(jugadores);
+		});
+		this.socket.on('otropreparado',function(jugadores){
 			mostrarListaJugadores(jugadores);
 		})
 	}

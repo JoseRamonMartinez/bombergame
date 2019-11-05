@@ -5,7 +5,6 @@ function ClienteRest(){
     		console.log(data);
     		if (data.nick!=""){
     			$.cookie("usr",JSON.stringify(data));
-    			//JSON.parse($.cookie("usr")) en la consola
 	    		mostrarUsuario(data);
 	    	}
 	    	else{
@@ -13,25 +12,37 @@ function ClienteRest(){
 	    	}
 		});
 	}
-	this.comprobarUsuario=function(nick){
+	this.comprobarUsuario=function(){
 		var usr=JSON.parse($.cookie("usr"));
 		$.getJSON("/comprobarUsuario/"+usr.nick,function(data){
-		console.log(data);
+			console.log(data);
     		if (data.nick!=""){
-    			$.cookie("usr",JSON.stringify(data));
-    			//JSON.parse($.cookie("usr")) en la consola
+    			//$.cookie("usr",JSON.stringify(data));
 	    		mostrarUsuario(data);
 	    	}
 	    	else{
 	    		$.removeCookie("usr");
-	    		mostrarAgregarusuario();
+				mostrarAgregarUsuario();	
 	    	}
 		});
 	}
-	this.crearPartida=function(nombrePartida,nick){
+
+	this.cerrarSesion=function(nick){
 		var usr=JSON.parse($.cookie("usr"));
-		$.getJSON("/crearPartida/"+nombrePartida+"/"+nick,function(data){    
-    		console.log(data);r
+		$.getJSON("/cerrarSesion/"+usr.nick,function(data){  
+    		console.log(data);
+    		$.removeCookie("usr"/*, { path: '/' }*/);
+    		mostrarAgregarUsuario(data);
+    	
+    		
+		});
+	}
+
+
+	this.crearPartida=function(nick){
+		var usr=JSON.parse($.cookie("usr"));
+		$.getJSON("/cerrarSesion/"+nick,function(data){    
+    		console.log(data);
     		mostrarPartida(data);
 		});
 	}
