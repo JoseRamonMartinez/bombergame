@@ -19,7 +19,11 @@
   "dependencies": {
     "express": "^4.17.1",
     "jasmine-node": "^3.0.0",
+<<<<<<< HEAD
     "jquery": "^3.4.1",
     "socket.io": "^2.3.0"
+=======
+    "jquery": "^3.4.1"
+>>>>>>> 3cd70f6d443ea5929c2d22ac51677010733189b1
   }
 }

@@ -26,6 +26,7 @@ function ClienteRest(){
 	    	}
 		});
 	}
+<<<<<<< HEAD
 
 	this.cerrarSesion=function(nick){
 		var usr=JSON.parse($.cookie("usr"));
@@ -42,6 +43,11 @@ function ClienteRest(){
 	this.crearPartida=function(nick){
 		var usr=JSON.parse($.cookie("usr"));
 		$.getJSON("/cerrarSesion/"+nick,function(data){    
+=======
+	this.crearPartida=function(nombrePartida){
+		var usr=JSON.parse($.cookie("usr"));
+		$.getJSON("/crearPartida/"+nombrePartida+"/"+usr.nick,function(data){    
+>>>>>>> 3cd70f6d443ea5929c2d22ac51677010733189b1
     		console.log(data);
     		mostrarPartida(data);
 		});
