@@ -1,4 +1,5 @@
 var Bomberman = Bomberman || {};
+var maximum_bomb=3;
 
 Bomberman.Player = function (game_state, name, position, properties) {
     "use strict";
@@ -9,6 +10,8 @@ Bomberman.Player = function (game_state, name, position, properties) {
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
     this.dropping_bomb = false;
+
+    
     
     this.animations.add("walking_down", [1, 2, 3], 10, true);
     this.animations.add("walking_left", [4, 5, 6, 7], 10, true);
@@ -76,8 +79,12 @@ Bomberman.Player.prototype.update = function () {
     }
     
     if (!this.dropping_bomb && this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+        if(maximum_bomb>=1){
         this.drop_bomb();
-        this.dropping_bomb = true;
+        maximum_bomb-=1;
+        this.dropping_bomb = true;} 
+       
+        
     }
     
     if (this.dropping_bomb && !this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
@@ -93,4 +100,10 @@ Bomberman.Player.prototype.drop_bomb = function () {
     bomb_position = new Phaser.Point(this.x, this.y);
     bomb_properties = {"texture": "bomb_spritesheet", "group": "bombs", bomb_radius: 3};
     bomb = Bomberman.create_prefab_from_pool(this.game_state.groups.bombs, Bomberman.Bomb.prototype.constructor, this.game_state, bomb_name, bomb_position, bomb_properties);
+    setTimeout(function(){
+        maximum_bomb+=1;
+    },3500);
+    
+
+    
 };
