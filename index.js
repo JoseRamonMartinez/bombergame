@@ -12,7 +12,17 @@ var modelo=require("./servidor/modelo.js");
 
 var juego=new modelo.Juego();
 
+var bodyParser=require("body-parser");
+
 app.use(exp.static(__dirname + "/cliente"));
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
+
+
+app.set('port', (process.env.PORT || 5000));
+
 
 // app.get("/",function(request,response){
 // 	response.send("hola");
@@ -24,15 +34,6 @@ app.get("/agregarUsuario/:nick",function(request,response){
 		response.send(usr);
 	});
 });
-
-
-app.get("/cerrarSesion/:nick",function(request,response){
-	var nick=request.params.nick;
-	juego.cerrarSesion(nick,function(usr){
-		response.send(usr);
-	});
-});
-
 
 app.get("/comprobarUsuario/:nick",function(request,response){
 	var nick=request.params.nick;
@@ -62,6 +63,20 @@ app.get("/obtenerUsuarios",function(request,response){
 	})
 });
 
+
+app.get("/obtenerResultados",function(request,response){
+	juego.obtenerResultados(function(resultados){
+		response.send(resultados);
+	})
+});
+
+app.get("/obtenerResultados/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.obtenerResultadosNick(nick,function(resultados){
+		response.send(resultados);
+	})
+});
+
 app.get("/unirAPartida/:nombrePartida/:nick",function(request,response){
 	var nick=request.params.nick;
 	var nombrePartida=request.params.nombrePartida;
@@ -78,10 +93,31 @@ app.get("/obtenerJugadores/:nombrePartida",function(request,response){
 	})
 });
 
+app.post("/registrarUsuario",function(request,response){
+	juego.registrarUsuario(request.body,function(res){
+	response.send(res);
+	})
+});
+
+
+
+app.get("/cerrarSesion/:nick",function(request,response){
+	var nick=request.params.nick;
+	//var data={res:"nook"};
+	juego.cerrarSesion(nick,function(data){
+		response.send(data);
+	});
+})
+
 //console.log("Servidor escuchando en "+host+":"+port);
 //app.listen(port,host);
-server.listen(port, function() {
+/*server.listen(port, function() {
+  console.log('Node app se está ejecutando en el puerto', port);
+});*/
+
+server.listen(app.get('port'), function() {
   console.log('Node app se está ejecutando en el puerto', port);
 });
+
 
 ws.lanzarSocketSrv(io,juego);

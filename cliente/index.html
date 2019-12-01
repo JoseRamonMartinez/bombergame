@@ -14,16 +14,19 @@
   <script src="src/clienteRest.js"></script>
   <script src="src/clienteWS.js"></script>
   <script src="src/controlWeb.js"></script>
+
   <script src="js/Utils.js"></script>
   <script src="js/states/BootState.js"></script>
   <script src="js/states/LoadingState.js"></script>
-  <script src="js/states/TiledState.js"></script>   
+  <script src="js/states/TiledState.js"></script>
   <script src="js/prefabs/Prefab.js"></script>
   <script src="js/prefabs/TextPrefab.js"></script>
-  <script src="js/prefabs/Player.js"></script><script src="js/prefabs/Bomb.js"></script>
+  <script src="js/prefabs/Player.js"></script>
+  <script src="js/prefabs/Bomb.js"></script>
   <script src="js/prefabs/Explosion.js"></script>
   <script src="js/prefabs/Enemy.js"></script>
   <script src="js/main.js"></script>
+
 </head>
 <body>
   <div class="jumbotron text-center">
@@ -32,16 +35,16 @@
   </div>
   <div class="container">
     <div class="row">
-     <div class="col">
-      <div id="inicio"></div>
-      <div id="juego"></div>
+       <div class="col">
+        <div id="inicio"></div>
+        <div id="juego" class='col-sm-8'></div>
+      </div>
     </div>
   </div>
-</div>
-<script>
-  rest=new ClienteRest();
+  <script>
+      rest=new ClienteRest();
       //mostrarAgregarUsuario();
       comprobarUsuario();
-    </script>
-  </body>
-  </html>
+  </script>
+</body>
+</html>

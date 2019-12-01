@@ -1,17 +1,18 @@
 var Bomberman = Bomberman || {};
-var maximum_bomb=3;
 
 Bomberman.Player = function (game_state, name, position, properties) {
     "use strict";
     Bomberman.Prefab.call(this, game_state, name, position, properties);
     
     this.anchor.setTo(0.5);
+    this.name=name;
+    this.estado="vivo";
+    ws.jugador=this;
     
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
+    this.vidas= +properties.vidas;
     this.dropping_bomb = false;
-
-    
     
     this.animations.add("walking_down", [1, 2, 3], 10, true);
     this.animations.add("walking_left", [4, 5, 6, 7], 10, true);
@@ -22,6 +23,9 @@ Bomberman.Player = function (game_state, name, position, properties) {
 
     this.game_state.game.physics.arcade.enable(this);
     this.body.setSize(14, 12, 0, 4);
+
+    this.initial_position = new Phaser.Point(this.x, this.y);
+    //this.ant=this.initial_position;
 
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
 };
@@ -78,19 +82,39 @@ Bomberman.Player.prototype.update = function () {
         this.frame = this.stopped_frames[this.body.facing];
     }
     
-    if (!this.dropping_bomb && this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-        if(maximum_bomb>=1){
+    if (!this.dropping_bomb && this.game_state.input.keyboard.isDown(Phaser.Keyboard.B)) {
         this.drop_bomb();
-        maximum_bomb-=1;
-        this.dropping_bomb = true;} 
-       
-        
+        this.dropping_bomb = true;
     }
     
-    if (this.dropping_bomb && !this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+    if (this.dropping_bomb && !this.game_state.input.keyboard.isDown(Phaser.Keyboard.B)) {
         this.dropping_bomb = false;
     }
 };
+
+// Bomberman.Player.prototype.bomba=function(){
+//     if (this.estado=="vivo"){
+//         this.estado="herido";
+//         console.log("impacto de bomba");
+//         this.x=this.initial_position.x;
+//         this.y=this.initial_position.y;
+//         ws.jugadorHerido();
+//     }
+
+// }
+
+Bomberman.Player.prototype.kill=function(){
+    if (this.estado=="vivo"){
+        this.estado="herido";
+        this.x=this.initial_position.x;
+        this.y=this.initial_position.y;
+        ws.jugadorHerido();
+    }
+}
+
+Bomberman.Player.prototype.volverAInicio = function(){
+    this.estado="vivo";
+}
 
 Bomberman.Player.prototype.drop_bomb = function () {
     "use strict";
@@ -100,10 +124,4 @@ Bomberman.Player.prototype.drop_bomb = function () {
     bomb_position = new Phaser.Point(this.x, this.y);
     bomb_properties = {"texture": "bomb_spritesheet", "group": "bombs", bomb_radius: 3};
     bomb = Bomberman.create_prefab_from_pool(this.game_state.groups.bombs, Bomberman.Bomb.prototype.constructor, this.game_state, bomb_name, bomb_position, bomb_properties);
-    setTimeout(function(){
-        maximum_bomb+=1;
-    },3500);
-    
-
-    
 };

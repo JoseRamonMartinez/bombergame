@@ -11,23 +11,34 @@ function comprobarUsuario(){
 }
 
 function mostrarAgregarUsuario(){
-	$('#mAU').remove();
+	$('#mLP').remove();
+	$('#mP').remove();
 	$('#mCP').remove();
-	
 	var cadena="<div id='mAU'>";
 	cadena=cadena+"<h3>Usuario</h3>";
-	cadena=cadena+'<input id="nombre" type="text" class="form-control" name="nombre" placeholder="Nombre usuario">';		
+	cadena=cadena+"<div class='row'><div class='col-sm-6'>";
+	cadena=cadena+'<input id="nombre" type="text" class="form-control" name="nombre" placeholder="nombre">';
+	cadena=cadena+'<input id="email" type="text" class="form-control" name="email" placeholder="email">';
+	cadena=cadena+'<input id="emailconfir" type="text" class="form-control" name="emailconfir" placeholder="emailconfir">';		
+	cadena=cadena+'<input id="clave" type="text" class="form-control" name="clave" placeholder="clave">';	
+	cadena=cadena+"</div><div class='col-sm-6'>"
 	cadena=cadena+'<button type="button" id="inicioBtn" class="btn btn-primary btn-md">Iniciar Usuario</button>';	
-	cadena=cadena+"</div>";
+	cadena=cadena+"</div></div>";
 
 	$('#inicio').append(cadena);
 	$('#inicioBtn').on('click',function(){
-		var nombre=$('#nombre').val();
-		if (nombre==""){
-			nombre="Neutro";
-		}
-		rest.agregarUsuario(nombre);
-	});
+        var nick=$('#nombre').val();
+        var email=$('#email').val();
+        var emailconfir=$('#emailconfir').val();
+        var clave=$('#clave').val();
+        if (nombre==""){
+        	nombre="Neutro";
+        }
+        rest.registrarUsuario(email,nick,clave);
+        rest.agregarUsuario(nick);
+     });
+
+
 }
 
 function mostrarUsuario(data){
@@ -44,33 +55,33 @@ function mostrarAviso(msg){
 }
 
 function mostrarCrearPartida(nick){
+	$('#mCP').remove();
 	$('#mLP').remove();
 	$('#mP').remove();
-	$('#mCP').remove();
 	var cadena="<div id='mCP'>";
 	cadena=cadena+"<h3>Bienvenido "+nick+"</h3>";
-	cadena=cadena+'<button type="button" id="cerrarSesionBtn" class="btn btn-primary btn-md" onclick="rest.cerrarSesion()">CerrarSesion</button>';
+	cadena=cadena+'<p><button type="button" id="cerrarSesion" class="btn btn-primary btn-md" onclick="rest.cerrarSesion()">Cerrar sesión</button></p>';
 	cadena=cadena+"<div class='row'><div class='col-sm-8'>";
 	cadena=cadena+"<h3>Crear Partida</h3>";
 	cadena=cadena+'<input id="nombrePartida" type="text" class="form-control" name="nombrePartida" placeholder="Nombre partida">';		
 	cadena=cadena+'<button type="button" id="crearPartidaBtn" class="btn btn-primary btn-md">Crear partida</button>';	
 	cadena=cadena+"</div><div class='col-sm-4'><h3>Unirse</h3>";
 	cadena=cadena+'<button type="button" id="unirseAPartidaBtn" class="btn btn-primary btn-md">Unirse a partida</button>';
-	cadena=cadena+"</div>";
+	cadena=cadena+"</div></div>";
 
 	$('#inicio').append(cadena);
 	$('#crearPartidaBtn').on('click',function(){
-		var nombre=$('#nombrePartida').val();
-		if (nombre==""){
-			nombre="SinNombre";
-		}
+        var nombre=$('#nombrePartida').val();
+        if (nombre==""){
+        	nombre="SinNombre";
+        }
         //rest.crearPartida(nombre,nick);
         ws.crearPartida(nombre);
-    });
+     });
 	$('#unirseAPartidaBtn').on('click',function(){
         //rest.obtenerPartidas();
         ws.obtenerPartidas();
-    });
+     });
 
 }
 
@@ -79,7 +90,7 @@ function mostrarPartida(data){
 	$('#mLP').remove();
 	var cadena="<div id='mP'>";
 	cadena=cadena+"<h3>Bienvenido a la partida: "+data.nombre+"</h3>";
-	cadena=cadena+'<p><button type="button" id="preparadoBtn" class="btn btn-primary btn-md" onclick="ws.preparado()">Preparado</button> ';	
+	cadena=cadena+'<p><button type="button" id="preparadoBtn" class="btn btn-primary btn-md" onclick="ws.preparado()"">Preparado</button> ';	
 	cadena=cadena+' <button type="button" id="salirBtn" class="btn btn-primary btn-md" onclick="ws.salir()"">Salir</button></p></div>';
 	$('#inicio').append(cadena);
 }
@@ -90,19 +101,19 @@ function mostrarListaPartidas(data){
 	var cadena="<div id='mLP'>";
 	cadena=cadena+"<h3>Lista de partidas</h3>";
 	//cadena=cadena+'<ul class="list-group">';
-	cadena=cadena+'<table class="table"><thead><tr>';
-	cadena=cadena+'<th scope="col">Nombre</th><th scope="col">Número jugadores</th><th>Unirse</th>';
-	cadena=cadena+'</tr></thead>';
-	cadena=cadena+'<tbody>';
-	for(var key in data){
-		cadena=cadena+'<tr>'
-		cadena=cadena+'<td>'+data[key].nombre+'</td>';
-		cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
-		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="ws.unirAPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
-		cadena=cadena+'</tr>';
-	};
-	cadena=cadena+"</tbody></table></div>";
-	$('#inicio').append(cadena);
+  	cadena=cadena+'<table class="table"><thead><tr>';
+    cadena=cadena+'<th scope="col">Nombre</th><th scope="col">Número jugadores</th><th>Unirse</th>';
+    cadena=cadena+'</tr></thead>';
+    cadena=cadena+'<tbody>';
+  	for(var key in data){
+  		cadena=cadena+'<tr>'
+  		cadena=cadena+'<td>'+data[key].nombre+'</td>';
+  		cadena=cadena+'<td>'+Object.keys(data[key].jugadores).length+'</td>';
+ 		cadena=cadena+'<td><button type="button" id="unirmeAPartidaBtn" class="btn btn-primary btn-md" onclick="ws.unirAPartida(\''+data[key].idp+'\',\''+nick+'\')">Unirse a partida</button></td>';
+ 		cadena=cadena+'</tr>';
+  	};
+  	cadena=cadena+"</tbody></table></div>";
+  	$('#inicio').append(cadena);
 }
 
 function mostrarListaJugadores(jugadores){
@@ -111,28 +122,29 @@ function mostrarListaJugadores(jugadores){
 	//var numeroPartidas=Object.keys(data).length;
 	var cadena="<div id='mLJ'>";
 	cadena=cadena+"<h3>Lista de jugadores</h3>";
-	cadena=cadena+'<table class="table"><thead><tr>';
-	cadena=cadena+'<th scope="col">Nick</th><th scope="col">Vidas</th><th>Otros</th>';
-	cadena=cadena+'</tr></thead>';
-	cadena=cadena+'<tbody>';
-	for(var key in jugadores){
-		cadena=cadena+'<tr>'
-		cadena=cadena+'<td>'+jugadores[key].nick+'</td>';
-		cadena=cadena+'<td>-</td>';
-		cadena=cadena+'<td>'+jugadores[key].estado+'</td>';
-		cadena=cadena+'</tr>';
-	};
-	cadena=cadena+"</tbody></table></div>";
-	$('#mP').append(cadena);
+  	cadena=cadena+'<table class="table"><thead><tr>';
+    cadena=cadena+'<th scope="col">Nick</th><th scope="col">Vidas</th><th>Otros</th>';
+    cadena=cadena+'</tr></thead>';
+    cadena=cadena+'<tbody>';
+  	for(var key in jugadores){
+  		cadena=cadena+'<tr>'
+  		cadena=cadena+'<td>'+jugadores[key].nick+'</td>';
+  		cadena=cadena+'<td>-</td>';
+ 		cadena=cadena+'<td>'+jugadores[key].estado+'</td>';
+ 		cadena=cadena+'</tr>';
+  	};
+  	cadena=cadena+"</tbody></table></div>";
+  	$('#mP').append(cadena);
 }
 
 function mostrarCanvas(){
-var game = new Phaser.Game(240, 240, Phaser.CANVAS, "juego");
-game.state.add("BootState", new Bomberman.BootState());
-game.state.add("LoadingState", new Bomberman.LoadingState());
-game.state.add("TiledState", new Bomberman.TiledState());
-game.state.start("BootState", true, false, "assets/levels/level1.json", "TiledState");}
-
+	$('#mLJ').remove();
+	game = new Phaser.Game(240, 240, Phaser.CANVAS,"juego");
+	game.state.add("BootState", new Bomberman.BootState());
+	game.state.add("LoadingState", new Bomberman.LoadingState());
+	game.state.add("TiledState", new Bomberman.TiledState());
+	game.state.start("BootState", true, false, "assets/levels/level1.json", "TiledState");
+}
 
 function borrarCanvas(){
 	$('canvas').remove();

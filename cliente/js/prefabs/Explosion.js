@@ -25,6 +25,4 @@ Bomberman.Explosion.prototype.reset = function (position_x, position_y) {
     Phaser.Sprite.prototype.reset.call(this, position_x, position_y);
     // add another kill event
     this.kill_timer.add(Phaser.Timer.SECOND * this.duration, this.kill, this);
-
-    
 };
