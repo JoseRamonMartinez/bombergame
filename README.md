@@ -1,8 +1,10 @@
 # bombergame
-Juego multijugador basado en el bomberman
+Multiplayer Game Based on BomberMan
 
-Para probar:
-  1- Clonar repositorio
-  2- npm init
-  3- Cabiar conxion MongoDB por propia en "bombergame/servidor/dao.js" Linea 69
-  3- Usar node index.js
+Try the project:
+
+1. Clone repository
+2. npm init
+3. Change MongoDB conexion "bombergame/servidor/dao.js" Linea 69 for our own MongoDB conexion
+4. Command "node index.js" to initiazize
+
