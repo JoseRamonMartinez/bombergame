@@ -64,9 +64,9 @@ function Dao(){
 
 
 	this.connect=function(){
-		//mongodb+srv://jose:<password>@joser-rgguo.mongodb.net/test?retryWrites=true&w=majority
+		//mongodb+srv://user:<password>@client-rgguo.mongodb.net/test?retryWrites=true&w=majority
 		var dao=this;
-		mongo.connect("mongodb+srv://jose:ironman7@joser-rgguo.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true},function(err, database){
+		mongo.connect("mongodb+srv://<user>:<password>@<userbbdd>-rgguo.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true},function(err, database){
             if (err){
                 console.log("No pudo conectar a la base de datos")
             }
