@@ -2,9 +2,9 @@
 
 ## Description 📢
 
-_Bombergame es un juego implementado mediante una aplicación web basado en el clasico videojuego llamado BomberMan. El usuario puede gestionar todo lo referente a su cuenta, crear y jugar nuevas partidas y ver los resultados globales de todos lo usuarios.
+Bombergame es un juego implementado mediante una aplicación web basado en el clasico videojuego llamado BomberMan. El usuario puede gestionar todo lo referente a su cuenta, crear y jugar nuevas partidas y ver los resultados globales de todos lo usuarios.
 
-La dinámica del juego es similar al del clasico bomberman. El jugador debe escapar de los enemigos y dispone de bombas que puede usar para  eliminar a los enemigos, romper las cajas y las dianas, con el fin que se habra el portal final. Además, se han implementado diversos grados de dificultad._
+La dinámica del juego es similar al del clasico bomberman. El jugador debe escapar de los enemigos y dispone de bombas que puede usar para  eliminar a los enemigos, romper las cajas y las dianas, con el fin que se habra el portal final. Además, se han implementado diversos grados de dificultad.
 
 ## Structure 📋
 
@@ -25,15 +25,6 @@ npm install
 ```
 
 2. Cambiar la cadena de conexion MongoDB, ubicada en "bombergame/servidor/dao.js" - Linea 69 -
-
-
-4. Create a **.env** for the database connection and for the jwt secret:
-```sh
-MONGO_ID=yourID
-MONGO_PASSWORD=yourPassword
-MONGO_CLUSTER=yourCluster
-MONGO_DATABASE=yourDatabaseCollectionName
-JWT_SECRET=anyJWTSecretString
 ```
 
 3. Ejecuta la app como local y accede a traves de [http://localhost:5000](http://localhost:5000):
@@ -62,7 +53,6 @@ _Back End_
 - [Express](https://angular.io/) 
 - [bcrypt](https://www.npmjs.com/package/bcrypt) 
 - [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken)
-- [mongoose](https://mongoosejs.com/) 
 - [cookie-parser](https://www.npmjs.com/package/cookie-parser) 
 
 ## Autor ✒️
