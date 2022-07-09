@@ -6,16 +6,18 @@ Bombergame es un juego implementado mediante una aplicación web basado en el cl
 
 La dinámica del juego es similar al del clasico bomberman. El jugador debe escapar de los enemigos y dispone de bombas que puede usar para  eliminar a los enemigos, romper las cajas y las dianas, con el fin que se habra el portal final. Además, se han implementado diversos grados de dificultad.
 
-## Structure 📋
+<br>
+
+# Structure 📋
 
 _La aplicación está basada en una arquitectura cliente-servidor, totalmente desacoplado, y una base de datos NoSQL mediante MongoDB._
 
-## Start 🚀
+# Start 🚀
 ### Pre-requirements 🔧
 
-- [Node]([http://localhost:4200](http://localhost:4200)
+- [NodeJS](https://nodejs.org/es/)
 
-### Local deploy 💻
+## Local deploy 💻
 
 _Las siguientes instrucciones permiten descargar una copia del repositorio y ejecutar la aplicación web localmente._
 
@@ -24,21 +26,23 @@ _Las siguientes instrucciones permiten descargar una copia del repositorio y eje
 npm install
 ```
 
-2. Cambiar la cadena de conexion MongoDB, ubicada en "bombergame/servidor/dao.js" - Linea 69 -
+2. Crear archivo .env
+```
+MONGO_URL = <tu_cadena_de_mongo>
 ```
 
-3. Ejecuta la app como local y accede a traves de [http://localhost:5000](http://localhost:5000):
+
+3. Ejecuta la app como local y accede a través de [http://localhost:5000](http://localhost:5000):
 ```sh
 node index.js
 ```
-
-
 ## Deploy 📦
 
-Desplegado con **Heroku**
+Se ha desplegado con **Heroku** y se puede acceder a través de [https://bomberboy.herokuapp.com](https://bomberboy.herokuapp.com)
 
+<br>
 
-## Tools🛠️
+# Tools🛠️
 
 _** (Most important):**_
 
