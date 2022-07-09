@@ -1,5 +1,6 @@
 var mongo=require("mongodb").MongoClient;
 var ObjectID=require("mongodb").ObjectID;
+require('dotenv').config()
 
 function Dao(){
 	this.resultado=undefined;
@@ -10,6 +11,11 @@ function Dao(){
         insertar(this.resultados,resu,callback);
     }
 
+    this.eliminarResultado=function(resu,callback){
+       eliminar(this.resultados,resu,callback);
+    }
+
+
     this.insertarUsuario=function(body,callback){
         insertar(this.usuarios,body,callback);
     }
@@ -17,6 +23,17 @@ function Dao(){
     this.obtenerUsuarios=function(callback){
         obtenerTodos(this.usuarios,callback);
     }
+
+
+
+    this.eliminarUsuario=function(uid,callback){
+       eliminar(this.usuarios,{_id:ObjectID(uid)},callback);
+    }
+
+    this.eliminarUsuarioCriterio=function(criterio,callback){
+       eliminar(this.usuarios,criterio,callback);
+    }
+
 
     this.obtenerUsuariosCriterio=function(criterio,callback){
         obtener(this.usuarios,criterio,callback);
@@ -30,6 +47,37 @@ function Dao(){
      this.obtenerResultadosCriterio=function(criterio,callback){
     	obtener(this.resultados,criterio,callback);
     }
+
+
+
+    //Actualizar / modificar (colección usuarios):
+
+    this.modificarColeccionUsuarios=function(usr,callback){
+            modificarColeccion(this.usuarios,usr,callback);
+        }
+
+    function modificarColeccion(coleccion,usr,callback){
+            coleccion.findAndModify({_id:ObjectID(usr._id)},{},usr,{},function(err,result){
+                if (err){
+                    console.log("No se pudo actualizar (método genérico)");
+                }
+                else{     
+                    console.log("Usuario actualizado"); 
+                }
+                callback(result);
+            });
+        }
+
+    function eliminar(coleccion,criterio,callback){
+        coleccion.deleteMany(criterio,function(err,result){
+
+            if(!err){
+                callback(result);
+            }
+        });
+    }
+
+    //Genericas
 
 	function obtener(coleccion,criterio,callback){
         coleccion.find(criterio).toArray(function(error,usr){
@@ -45,7 +93,7 @@ function Dao(){
 
     function obtenerTodos(coleccion,callback){
         coleccion.find().toArray(function(error,col){
-            callback(col);
+                callback(col);
         });
     };
 
@@ -63,10 +111,13 @@ function Dao(){
     }
 
 
-	this.connect=function(){
-		//mongodb+srv://user:<password>@client-rgguo.mongodb.net/test?retryWrites=true&w=majority
+
+
+
+
+	this.connect=function(callback){
 		var dao=this;
-		mongo.connect("mongodb+srv://<user>:<password>@<userbbdd>-rgguo.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true},function(err, database){
+		mongo.connect(process.env.MONGO_URL,{useNewUrlParser:true},function(err, database){
             if (err){
                 console.log("No pudo conectar a la base de datos")
             }
@@ -93,10 +144,11 @@ function Dao(){
                     }
                 });
 
+                callback(database);
             }
 		});
 	}
-	this.connect();
+	//this.connect();
 
 }
 module.exports.Dao=Dao;

@@ -22,29 +22,135 @@
   <script src="js/prefabs/Prefab.js"></script>
   <script src="js/prefabs/TextPrefab.js"></script>
   <script src="js/prefabs/Player.js"></script>
+  <script src="js/prefabs/Remoto.js"></script>
   <script src="js/prefabs/Bomb.js"></script>
   <script src="js/prefabs/Explosion.js"></script>
   <script src="js/prefabs/Enemy.js"></script>
+
+
+  <script src="js/prefabs/Target.js"></script>
+  <script src="js/prefabs/Goal.js"></script>
+  <script src="js/prefabs/Item.js"></script>
+  <script src="js/prefabs/LifeItem.js"></script>
+  <script src="js/prefabs/BombItem.js"></script>
+  <script src="js/prefabs/Lives.js"></script>
+
   <script src="js/main.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/estilos.css" media="screen" />
 
 </head>
 <body>
-  <div class="jumbotron text-center">
-    <h1>Bomber Game</h1>
-    <p>El juego del año 2019 en la ESII</p> 
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="">Bomberboy</a>
+  <!-- Links -->
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:loguearse()">Iniciar Sesión</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:registrarse()">Registrarse</a>
+    </li>
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Configuracion
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="javascript:modificar()">Cambiar contraseña</a>
+        <a class="dropdown-item" href="javascript:eliminar()">Borrar cuenta</a>
+         <a class="dropdown-item" href="javascript:cerrarSesion()">Cerrar Sesion</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+
+  <div class="jumbotron text-center ">
+    <h1 class="title-mobile">Bomber Boy</h1>
+    <p class="hide-mobile">Juego basado en bombergame. Proyecto de Jose R Martinez.</p>
   </div>
   <div class="container">
     <div class="row">
        <div class="col">
         <div id="inicio"></div>
-        <div id="juego" class='col-sm-8'></div>
+         <div class="row">
+        <div id="juego" class='col-sm-6'></div>
+        <div id="controles" class='col-sm-6'></div>
+        </div>
+        
       </div>
     </div>
   </div>
   <script>
+      rest = new ClienteRest(); 
+       borrarCanvas();
+       comprobarUsuario();
+       mostrarLoguearUsuario();
+    </script>
+
+  <script>
+      function registrarse(){
+       borrarCanvas();
+       mostrarAgregarUsuario();
+      
+      }
+    </script>
+
+      <script>
+      function cerrarSesion(){
+       borrarCanvas();
+       ws.disconnect();
+       rest.cerrarSesion();  
+       
+      }
+      </script>
+
+    <script>
+      function loguearse(){
+        if ($.cookie("usr")){ 
+              borrarCanvas();
+              ws.disconnect();
+              rest.cerrarSesion();
+
+             
+                //mostrarCrearPartida(nick);
+                //$.removeCookie("usr");
+
+        }else
+        borrarCanvas();
+        mostrarLoguearUsuario();
+
+      }
+    </script>
+
+    <script>
+      function modificar(){
+        borrarCanvas();
+        mostrarActualizarUsuario();
+      }
+    </script>
+
+      <script>
+      function eliminar(){
+        //alert("No implementado aun, disculpe las molestias")
+        borrarCanvas();
+        mostrarEliminarUsuario();
+      }
+    </script>
+
+
+
+<div class="col-sm-12 text-center" style="background-color:#fff;">Proyecto de José Ramón Martínez     ©ESIIAB</div>
+ 
+  <!--<script>
       rest=new ClienteRest();
       //mostrarAgregarUsuario();
       comprobarUsuario();
   </script>
+-->
 </body>
 </html>

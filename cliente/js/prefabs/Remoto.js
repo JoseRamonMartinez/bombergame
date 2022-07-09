@@ -1,6 +1,6 @@
 var Bomberman = Bomberman || {};
 
-Bomberman.Player = function (game_state, name, position, properties) {
+Bomberman.Remoto = function (game_state, name, position, properties) {
     "use strict";
     Bomberman.Prefab.call(this, game_state, name, position, properties);
     
@@ -8,8 +8,6 @@ Bomberman.Player = function (game_state, name, position, properties) {
     this.name=name;
     this.estado="vivo";
     //ws.jugador=this;
-
-    ws.spriteLocal=this;
     
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
@@ -26,38 +24,31 @@ Bomberman.Player = function (game_state, name, position, properties) {
     this.game_state.game.physics.arcade.enable(this);
     this.body.setSize(14, 12, 0, 4);
 
-    this.x=ws.jugador.posicion.x;
-    this.y=ws.jugador.posicion.y;
+
+    this.x=ws.rival.posicion.x;
+    this.y=ws.rival.posicion.y;
 
     this.initial_position = new Phaser.Point(this.x, this.y);
     //this.ant=this.initial_position;
+    ws.spriteRival=this;
 
-    this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
-    this.number_of_lives = localStorage.number_of_lives || +properties.number_of_lives;
-    this.number_of_bombs = localStorage.number_of_bombs || +properties.number_of_bombs;
-    this.current_bomb_index = 0;
+    //this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
 };
 
-Bomberman.Player.prototype = Object.create(Bomberman.Prefab.prototype);
-Bomberman.Player.prototype.constructor = Bomberman.Player;
+Bomberman.Remoto.prototype = Object.create(Bomberman.Prefab.prototype);
+Bomberman.Remoto.prototype.constructor = Bomberman.Remoto;
 
-Bomberman.Player.prototype.update = function () {
+Bomberman.Remoto.prototype.update = function () {
     "use strict";
-    var colliding_bombs;
-
-    this.game_state.game.physics.arcade.collide(this, this.game_state.layers.walls);
-    this.game_state.game.physics.arcade.collide(this, this.game_state.layers.blocks);
-    this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bombs);
-    
     this.game_state.game.physics.arcade.collide(this, this.game_state.layers.collision);
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bombs);
-    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.killExplosion, null, this);
-    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.enemies, this.killEnemies, null, this);
-    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.remotos, this.killPlayer, null, this);
-
+    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.kill, null, this);
+    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.enemies, this.kill, null, this);
+    this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.players, this.killRemoto, null, this);
+    
+    /*
     if (this.cursors.left.isDown && this.body.velocity.x <= 0) {
         // move left
-        ws.mover("left",{x:this.x,y:this.y});
         this.body.velocity.x = -this.walking_speed;
         if (this.body.velocity.y === 0) {
             // change the scale, since we have only one animation for left and right directions
@@ -66,7 +57,6 @@ Bomberman.Player.prototype.update = function () {
         }
     } else if (this.cursors.right.isDown && this.body.velocity.x >= 0) {
         // move right
-        ws.mover("right",{x:this.x,y:this.y});
         this.body.velocity.x = +this.walking_speed;
         if (this.body.velocity.y === 0) {
             // change the scale, since we have only one animation for left and right directions
@@ -74,121 +64,145 @@ Bomberman.Player.prototype.update = function () {
             this.animations.play("walking_right");
         }
     } else {
-        ws.mover("velx",{x:this.x,y:this.y});
         this.body.velocity.x = 0;
     }
 
     if (this.cursors.up.isDown && this.body.velocity.y <= 0) {
         // move up
-        ws.mover("up",{x:this.x,y:this.y});
         this.body.velocity.y = -this.walking_speed;
         if (this.body.velocity.x === 0) {
             this.animations.play("walking_up");
         }
     } else if (this.cursors.down.isDown && this.body.velocity.y >= 0) {
         // move down
-        ws.mover("down",{x:this.x,y:this.y});
         this.body.velocity.y = +this.walking_speed;
         if (this.body.velocity.x === 0) {
             this.animations.play("walking_down");
         }
     } else {
-        ws.mover("vely",{x:this.x,y:this.y});
         this.body.velocity.y = 0;
     }
+    ///
     
     if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
         // stop current animation
-        ws.mover("stop",{x:this.x,y:this.y});
         this.animations.stop();
         this.frame = this.stopped_frames[this.body.facing];
     }
-
-
-    if(this.game_state.input.keyboard.isDown(Phaser.Keyboard.ESC)){
-
-    this.killExplosion();
-
-    }
-
     
     if (!this.dropping_bomb && this.game_state.input.keyboard.isDown(Phaser.Keyboard.B)) {
-
-        
-        if(this.number_of_bombs>0){
-        this.number_of_bombs-=1;
-        ws.mover("dropTrue",{x:this.x,y:this.y});
         this.drop_bomb();
-
-        }
         this.dropping_bomb = true;
     }
     
     if (this.dropping_bomb && !this.game_state.input.keyboard.isDown(Phaser.Keyboard.B)) {
-        ws.mover("dropFalse",{x:this.x,y:this.y});
         this.dropping_bomb = false;
     }
+    */
 };
 
+// Bomberman.Remoto.prototype.bomba=function(){
+//     if (this.estado=="vivo"){
+//         this.estado="herido";
+//         console.log("impacto de bomba");
+//         this.x=this.initial_position.x;
+//         this.y=this.initial_position.y;
+//         ws.jugadorHerido();
+//     }
 
-Bomberman.Player.prototype.killExplosion=function(){
-   
-     if ((this.estado=="vivo") || (this.estado=="herido")){
-        this.estado="muerto";
-        this.x=this.initial_position.x;
-        this.y=this.initial_position.y;
-        this.number_of_lives = 0;
-        ws.jugadorHerido();
+// }
+
+
+Bomberman.Remoto.prototype.mover=function(operacion, posicion){
+
+
+    if (operacion=="left") {
+        // move left
+        this.body.velocity.x = -this.walking_speed;
+        if (this.body.velocity.y === 0) {
+            // change the scale, since we have only one animation for left and right directions
+            this.scale.setTo(-1, 1);
+            this.animations.play("walking_left");
+        }
+    }  if (operacion=="right") {
+        // move right
+        this.body.velocity.x = +this.walking_speed;
+        if (this.body.velocity.y === 0) {
+            // change the scale, since we have only one animation for left and right directions
+            this.scale.setTo(1, 1);
+            this.animations.play("walking_right");
+        }
+    } if (operacion=="velx") {
+        this.body.velocity.x = 0;
+    }
+
+    if (operacion=="up") {
+        // move up
+        this.body.velocity.y = -this.walking_speed;
+        if (this.body.velocity.x === 0) {
+            this.animations.play("walking_up");
+        }
+    }  if (operacion=="down") {
+        console.log("c1")
+        // move down
+        this.body.velocity.y = +this.walking_speed;
+        if (this.body.velocity.x === 0) {
+            this.animations.play("walking_down");
+        }
+    } if (operacion=="vely"){
+        this.body.velocity.y = 0;
+    
     }
     
-};
+    if (operacion=="stop") {
+        // stop current animation
+        this.animations.stop();
+        this.frame = this.stopped_frames[this.body.facing];
+    }
+    
+    if (operacion=="dropTrue") {
+        this.drop_bomb();
+        this.dropping_bomb = true;
+    }
+    
+    if (operacion=="dropFalse") {
+        this.dropping_bomb = false;
+    }
 
-Bomberman.Player.prototype.killEnemies=function(){
-   
+     if (operacion=="inicio") {
+        this.x=ws.jugador.posicion.x;
+        this.y=ws.jugador.posicion.y;
+    }
+}
 
+
+Bomberman.Remoto.prototype.kill=function(){
     if (this.estado=="vivo"){
         this.estado="herido";
         this.x=this.initial_position.x;
         this.y=this.initial_position.y;
-        this.number_of_lives -= 1;
         ws.jugadorHerido();
     }
-    
-    
-};
-/*Necesito repasar este metodo*/
-Bomberman.Player.prototype.killPlayer=function(){
+}
+
+Bomberman.Remoto.prototype.killRemoto=function(){
         this.x=this.initial_position.x;
         this.y=this.initial_position.y;
-        //ws.mover("inicio",{});
+        
+       
     }
 
-Bomberman.Player.prototype.volverAInicio = function(){
+
+Bomberman.Remoto.prototype.volverAInicio = function(){
     this.estado="vivo";
 }
 
-Bomberman.Player.prototype.drop_bomb = function () {
+Bomberman.Remoto.prototype.drop_bomb = function () {
     "use strict";
-   
     var bomb, bomb_name, bomb_position, bomb_properties;
     // get the first dead bomb from the pool
     bomb_name = this.name + "_bomb_" + this.game_state.groups.bombs.countLiving();
     bomb_position = new Phaser.Point(this.x, this.y);
     bomb_properties = {"texture": "bomb_spritesheet", "group": "bombs", bomb_radius: 3};
     bomb = Bomberman.create_prefab_from_pool(this.game_state.groups.bombs, Bomberman.Bomb.prototype.constructor, this.game_state, bomb_name, bomb_position, bomb_properties);
-    this.current_bomb_index += 1;
-};
-
-Bomberman.Player.prototype.die = function () {
-    "use strict";
-    // decrease the number of lives
-    this.number_of_lives -= 1;
-    if (this.game_state.prefabs.lives.number_of_lives <= 0) {
-        // if there are no more lives, it's game over
-        this.game_state.game_over();
-    } else {
-        // if there are remaining lives, restart the player position
-        this.x = this.initial_position.x;
-        this.y = this.initial_position.y;
-    }
 };

@@ -6,8 +6,17 @@ Bomberman.TiledState = function () {
     
     this.prefab_classes = {
         "player": Bomberman.Player.prototype.constructor,
-        "enemy": Bomberman.Enemy.prototype.constructor
+        "remoto": Bomberman.Remoto.prototype.constructor,
+        "enemy": Bomberman.Enemy.prototype.constructor,
+        "target": Bomberman.Target.prototype.constructor,
+        "life_item": Bomberman.LifeItem.prototype.constructor,
+        "bomb_item": Bomberman.BombItem.prototype.constructor
     };
+    this.items = {
+        life_item: {probability: 0.4, properties: {texture: "life_item_image", group: "items"}},
+        bomb_item: {probability: 0.6, properties: {texture: "bomb_item_image", group: "items"}}
+    };
+
 };
 
 Bomberman.TiledState.prototype = Object.create(Phaser.State.prototype);
@@ -36,6 +45,10 @@ Bomberman.TiledState.prototype.init = function (level_data) {
         this.map.addTilesetImage(tileset.name, level_data.map.tilesets[tileset_index]);
         tileset_index += 1;
     }, this);
+
+    if (this.level_data.first_level) {
+        localStorage.clear();
+    }
 };
 
 Bomberman.TiledState.prototype.create = function () {
@@ -76,6 +89,9 @@ Bomberman.TiledState.prototype.create = function () {
             this.map.objects[object_layer].forEach(this.create_object, this);
         }
     }
+    //
+     this.init_hud();
+
 };
 
 Bomberman.TiledState.prototype.create_object = function (object) {
@@ -99,6 +115,24 @@ Bomberman.TiledState.prototype.create_object = function (object) {
 
 };
 
+Bomberman.TiledState.prototype.init_hud = function () {
+    "use strict";
+    var lives_position,bombs_position,bombs_properties, lives_properties, lives, bombs;
+    
+    // create the lives prefab
+    lives_position = new Phaser.Point(0.90 * this.game.world.width, 0.07 * this.game.world.height);
+    lives_properties = {group: "hud", texture: "heart_bomb_image", number_of_lives: 3};
+    lives = new Bomberman.Lives(this, "lives", lives_position, lives_properties);
+
+    /*bombs_position = new Phaser.Point(0.85 * this.game.world.width, 0.07 * this.game.world.height);
+    bombs_properties = {group: "hud", texture: "bombs_image", number_of_bombs: 5};
+    bombs = new Bomberman.BombsHud(this, "bombs", bombs_position, bombs_properties);*/
+    // create bomb prefabs
+    /*bombs_position = new Phaser.Point(0.94 * this.game.world.width, 0.07 * this.game.world.height);
+    bombs_properties = {group: "hud", texture: "heart_image", number_of_bombs: 5};
+    bombs = new Bomberman.Lives(this, "lives", bombs_position, bombs_properties);*/
+};
+
 Bomberman.TiledState.prototype.todosEnemigosMuertos=function(){
     res=true;
     for (var key in this.enemigos){
@@ -108,9 +142,19 @@ Bomberman.TiledState.prototype.todosEnemigosMuertos=function(){
     }
     return res;
 }
-
+3
 Bomberman.TiledState.prototype.game_over = function () {
     "use strict";
     localStorage.clear();
     this.game.state.restart(true, false, this.level_data);
+};
+
+
+//Hacer
+
+Bomberman.TiledState.prototype.next_level = function () {
+    "use strict";
+    localStorage.number_of_lives = this.prefabs.player.number_of_lives;
+    localStorage.number_of_bombs = this.prefabs.player.number_of_bombs;
+    this.game.state.start("BootState", true, false, this.level_data.next_level, "TiledState");
 };

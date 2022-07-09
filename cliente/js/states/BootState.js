@@ -1,5 +1,7 @@
 var Bomberman = Bomberman || {};
 
+//se carga el nivel aqui
+
 Bomberman.BootState = function () {
     "use strict";
     Phaser.State.call(this);

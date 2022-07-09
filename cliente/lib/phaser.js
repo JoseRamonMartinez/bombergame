@@ -5902,7 +5902,7 @@ PIXI.WebGLStencilManager.prototype.bindGraphics = function(graphics, webGLData, 
  */
 PIXI.WebGLStencilManager.prototype.popStencil = function(graphics, webGLData, renderSession)
 {
-	var gl = this.gl;
+    var gl = this.gl;
     this.stencilStack.pop();
    
     this.count--;
@@ -7886,7 +7886,7 @@ PIXI.CanvasMaskManager.prototype.constructor = PIXI.CanvasMaskManager;
  */
 PIXI.CanvasMaskManager.prototype.pushMask = function(maskData, renderSession)
 {
-	var context = renderSession.context;
+    var context = renderSession.context;
 
     context.save();
     
@@ -12457,8 +12457,8 @@ PIXI.AbstractFilter.prototype.apply = function(frameBuffer)
 */
 var Phaser = Phaser || {
 
-	VERSION: '2.3.0',
-	GAMES: [],
+    VERSION: '2.3.0',
+    GAMES: [],
 
     AUTO: 0,
     CANVAS: 1,
@@ -69004,64 +69004,64 @@ module.exports = RaycastResult;
  */
 function RaycastResult(){
 
-	/**
-	 * @property {array} rayFromWorld
-	 */
-	this.rayFromWorld = vec2.create();
+    /**
+     * @property {array} rayFromWorld
+     */
+    this.rayFromWorld = vec2.create();
 
-	/**
-	 * @property {array} rayToWorld
-	 */
-	this.rayToWorld = vec2.create();
+    /**
+     * @property {array} rayToWorld
+     */
+    this.rayToWorld = vec2.create();
 
-	/**
-	 * @property {array} hitNormalWorld
-	 */
-	this.hitNormalWorld = vec2.create();
+    /**
+     * @property {array} hitNormalWorld
+     */
+    this.hitNormalWorld = vec2.create();
 
-	/**
-	 * @property {array} hitPointWorld
-	 */
-	this.hitPointWorld = vec2.create();
+    /**
+     * @property {array} hitPointWorld
+     */
+    this.hitPointWorld = vec2.create();
 
-	/**
-	 * @property {boolean} hasHit
-	 */
-	this.hasHit = false;
+    /**
+     * @property {boolean} hasHit
+     */
+    this.hasHit = false;
 
-	/**
-	 * The hit shape, or null.
-	 * @property {Shape} shape
-	 */
-	this.shape = null;
+    /**
+     * The hit shape, or null.
+     * @property {Shape} shape
+     */
+    this.shape = null;
 
-	/**
-	 * The hit body, or null.
-	 * @property {Body} body
-	 */
-	this.body = null;
+    /**
+     * The hit body, or null.
+     * @property {Body} body
+     */
+    this.body = null;
 
-	/**
-	 * The index of the hit triangle, if the hit shape was a trimesh.
-	 * @property {number} hitFaceIndex
-	 * @default -1
-	 */
-	this.hitFaceIndex = -1;
+    /**
+     * The index of the hit triangle, if the hit shape was a trimesh.
+     * @property {number} hitFaceIndex
+     * @default -1
+     */
+    this.hitFaceIndex = -1;
 
-	/**
-	 * Distance to the hit. Will be set to -1 if there was no hit.
-	 * @property {number} distance
-	 * @default -1
-	 */
-	this.distance = -1;
+    /**
+     * Distance to the hit. Will be set to -1 if there was no hit.
+     * @property {number} distance
+     * @default -1
+     */
+    this.distance = -1;
 
-	/**
-	 * If the ray should stop traversing the bodies.
-	 * @private
-	 * @property {Boolean} _shouldStop
-	 * @default false
-	 */
-	this._shouldStop = false;
+    /**
+     * If the ray should stop traversing the bodies.
+     * @private
+     * @property {Boolean} _shouldStop
+     * @default false
+     */
+    this._shouldStop = false;
 }
 
 /**
@@ -69069,23 +69069,23 @@ function RaycastResult(){
  * @method reset
  */
 RaycastResult.prototype.reset = function () {
-	vec2.set(this.rayFromWorld, 0, 0);
-	vec2.set(this.rayToWorld, 0, 0);
-	vec2.set(this.hitNormalWorld, 0, 0);
-	vec2.set(this.hitPointWorld, 0, 0);
-	this.hasHit = false;
-	this.shape = null;
-	this.body = null;
-	this.hitFaceIndex = -1;
-	this.distance = -1;
-	this._shouldStop = false;
+    vec2.set(this.rayFromWorld, 0, 0);
+    vec2.set(this.rayToWorld, 0, 0);
+    vec2.set(this.hitNormalWorld, 0, 0);
+    vec2.set(this.hitPointWorld, 0, 0);
+    this.hasHit = false;
+    this.shape = null;
+    this.body = null;
+    this.hitFaceIndex = -1;
+    this.distance = -1;
+    this._shouldStop = false;
 };
 
 /**
  * @method abort
  */
 RaycastResult.prototype.abort = function(){
-	this._shouldStop = true;
+    this._shouldStop = true;
 };
 
 /**
@@ -69099,21 +69099,21 @@ RaycastResult.prototype.abort = function(){
  * @param {number} distance
  */
 RaycastResult.prototype.set = function(
-	rayFromWorld,
-	rayToWorld,
-	hitNormalWorld,
-	hitPointWorld,
-	shape,
-	body,
-	distance
+    rayFromWorld,
+    rayToWorld,
+    hitNormalWorld,
+    hitPointWorld,
+    shape,
+    body,
+    distance
 ){
-	vec2.copy(this.rayFromWorld, rayFromWorld);
-	vec2.copy(this.rayToWorld, rayToWorld);
-	vec2.copy(this.hitNormalWorld, hitNormalWorld);
-	vec2.copy(this.hitPointWorld, hitPointWorld);
-	this.shape = shape;
-	this.body = body;
-	this.distance = distance;
+    vec2.copy(this.rayFromWorld, rayFromWorld);
+    vec2.copy(this.rayToWorld, rayToWorld);
+    vec2.copy(this.hitNormalWorld, hitNormalWorld);
+    vec2.copy(this.hitPointWorld, hitPointWorld);
+    this.shape = shape;
+    this.body = body;
+    this.distance = distance;
 };
 },{"../math/vec2":31}],14:[function(require,module,exports){
 var Utils = require('../utils/Utils')
@@ -76122,10 +76122,10 @@ module.exports = IslandNode;
  */
 function IslandNode(body){
 
-	/**
-	 * The body that is contained in this node.
-	 * @property {Body} body
-	 */
+    /**
+     * The body that is contained in this node.
+     * @property {Body} body
+     */
     this.body = body;
 
     /**
@@ -79777,7 +79777,7 @@ Phaser.Physics.P2.FixtureList.prototype = {
 Phaser.Physics.P2.PointProxy = function (world, destination) {
 
     this.world = world;
-	this.destination = destination;
+    this.destination = destination;
 
 };
 
@@ -79880,7 +79880,7 @@ Object.defineProperty(Phaser.Physics.P2.PointProxy.prototype, "my", {
 Phaser.Physics.P2.InversePointProxy = function (world, destination) {
 
     this.world = world;
-	this.destination = destination;
+    this.destination = destination;
 
 };
 
@@ -80999,10 +80999,10 @@ Phaser.Physics.P2.Body.prototype = {
     */
     removeShape: function (shape) {
 
-		var result = this.data.removeShape(shape);
-	
-		this.shapeChanged();
-	
+        var result = this.data.removeShape(shape);
+    
+        this.shapeChanged();
+    
         return result;
     },
 
@@ -82403,45 +82403,45 @@ Phaser.Physics.P2.Material.prototype.constructor = Phaser.Physics.P2.Material;
 */
 Phaser.Physics.P2.ContactMaterial = function (materialA, materialB, options) {
 
-	/**
-	* @property {number} id - The contact material identifier.
-	*/
+    /**
+    * @property {number} id - The contact material identifier.
+    */
 
-	/**
-	* @property {Phaser.Physics.P2.Material} materialA - First material participating in the contact material.
-	*/
+    /**
+    * @property {Phaser.Physics.P2.Material} materialA - First material participating in the contact material.
+    */
 
-	/**
-	* @property {Phaser.Physics.P2.Material} materialB - Second material participating in the contact material.
-	*/
+    /**
+    * @property {Phaser.Physics.P2.Material} materialB - Second material participating in the contact material.
+    */
 
-	/**
-	* @property {number} [friction=0.3] - Friction to use in the contact of these two materials.
-	*/
+    /**
+    * @property {number} [friction=0.3] - Friction to use in the contact of these two materials.
+    */
 
-	/**
-	* @property {number} [restitution=0.0] - Restitution to use in the contact of these two materials.
-	*/
+    /**
+    * @property {number} [restitution=0.0] - Restitution to use in the contact of these two materials.
+    */
 
-	/**
-	* @property {number} [stiffness=1e7] - Stiffness of the resulting ContactEquation that this ContactMaterial generate.
-	*/
+    /**
+    * @property {number} [stiffness=1e7] - Stiffness of the resulting ContactEquation that this ContactMaterial generate.
+    */
 
-	/**
-	* @property {number} [relaxation=3] - Relaxation of the resulting ContactEquation that this ContactMaterial generate.
-	*/
+    /**
+    * @property {number} [relaxation=3] - Relaxation of the resulting ContactEquation that this ContactMaterial generate.
+    */
 
-	/**
-	* @property {number} [frictionStiffness=1e7] - Stiffness of the resulting FrictionEquation that this ContactMaterial generate.
-	*/
+    /**
+    * @property {number} [frictionStiffness=1e7] - Stiffness of the resulting FrictionEquation that this ContactMaterial generate.
+    */
 
-	/**
-	* @property {number} [frictionRelaxation=3] - Relaxation of the resulting FrictionEquation that this ContactMaterial generate.
-	*/
+    /**
+    * @property {number} [frictionRelaxation=3] - Relaxation of the resulting FrictionEquation that this ContactMaterial generate.
+    */
 
-	/**
-	* @property {number} [surfaceVelocity=0] - Will add surface velocity to this material. If bodyA rests on top if bodyB, and the surface velocity is positive, bodyA will slide to the right.
-	*/
+    /**
+    * @property {number} [surfaceVelocity=0] - Will add surface velocity to this material. If bodyA rests on top if bodyB, and the surface velocity is positive, bodyA will slide to the right.
+    */
 
     p2.ContactMaterial.call(this, materialA, materialB, options);
 
@@ -84683,7 +84683,7 @@ Phaser.Tilemap.prototype = {
             this.layers[layer].data[ diffY + tileblock[i].y ][ diffX + tileblock[i].x ].copy(tileblock[i]);
         }
 
-		this.layers[layer].dirty = true;
+        this.layers[layer].dirty = true;
         this.calculateFaces(layer);
 
     },

@@ -28,12 +28,42 @@ app.set('port', (process.env.PORT || 5000));
 // 	response.send("hola");
 // });
 
+
+app.post("/registrarUsuario",function(request,response){
+	juego.registrarUsuario(request.body,function(res){
+	response.send(res);
+	})
+});
+
+
+app.post("/loguearUsuario",function(request,response){
+	juego.loguearUsuario(request.body,function(res){
+	response.send(res);
+	})
+});
+
+
 app.get("/agregarUsuario/:nick",function(request,response){
 	var nick=request.params.nick;
 	juego.agregarUsuario(nick,function(usr){
 		response.send(usr);
 	});
 });
+
+app.put("/actualizarUsuario",function(request,response){
+    juego.actualizarUsuario(request.body,function(result){
+            response.send(result);
+        });
+});
+
+
+app.delete("/eliminarUsuario/:uid",function(request,response){
+    var uid=request.params.uid;
+    juego.eliminarUsuario(uid,function(result){
+        response.send(result);
+    });
+});
+
 
 app.get("/comprobarUsuario/:nick",function(request,response){
 	var nick=request.params.nick;
@@ -60,6 +90,21 @@ app.get("/obtenerPartidas",function(request,response){
 app.get("/obtenerUsuarios",function(request,response){
 	juego.obtenerUsuarios(function(usuarios){
 		response.send(usuarios);
+	})
+});
+
+app.get("/obtenerUsuarioCriterio/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.obtenerUsuarioCriterio(nick,function(usuarios){
+		response.send(usuarios._id);
+	})
+});
+
+app.get("/eliminarUsuario/:nick",function(request,response){
+	var nick=request.params.nick;
+	juego.eliminarUsuarioCriterio(nick,function(usuarios){
+		//response.send(usuarios._id);
+		console.log(eliminado);
 	})
 });
 
@@ -93,13 +138,6 @@ app.get("/obtenerJugadores/:nombrePartida",function(request,response){
 	})
 });
 
-app.post("/registrarUsuario",function(request,response){
-	juego.registrarUsuario(request.body,function(res){
-	response.send(res);
-	})
-});
-
-
 
 app.get("/cerrarSesion/:nick",function(request,response){
 	var nick=request.params.nick;
@@ -118,6 +156,7 @@ app.get("/cerrarSesion/:nick",function(request,response){
 server.listen(app.get('port'), function() {
   console.log('Node app se está ejecutando en el puerto', port);
 });
+
 
 
 ws.lanzarSocketSrv(io,juego);
