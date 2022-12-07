@@ -32,7 +32,7 @@ MONGO_URL = <tu_cadena_de_mongo>
 ```
 
 
-3. Ejecuta la app como local y accede a través de [http://localhost:5000](http://localhost:5000):
+3. Ejecuta la app como local y accede a través de [http://localhost:8000](http://localhost:8000):
 ```sh
 node index.js
 ```
